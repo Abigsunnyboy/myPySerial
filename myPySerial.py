@@ -193,7 +193,6 @@ class PyQt_Serial(QWidget):
             if com.open(QSerialPort.ReadWrite):
                 self.comNameCombo.addItem(info.portName())
                 com.close()
-        pass
 
     def on_setEncoding(self):
         if self.encodingGroup.checkedId() == 0:
@@ -250,7 +249,6 @@ class PyQt_Serial(QWidget):
             self.stopShowingButton.setText('继续显示')
         else:
             self.stopShowingButton.setText('停止显示')
-        pass
 
     def on_clearCouter(self):
         self.sendCount = 0
@@ -272,11 +270,16 @@ class PyQt_Serial(QWidget):
             if len(s) % 2 == 1:  # 如果16进制不是偶数个字符,去掉最后一个
                 QMessageBox.critical(self, '错误', '十六进制数不是偶数个')
                 return
-            pattern = re.compile('[^0-9a-fA-F]')
-            r = pattern.findall(s)
-            if len(r) != 0:
+#             pattern = re.compile('[^0-9a-fA-F]')
+#             r = pattern.findall(s)
+#             if len(r) != 0:
+#                 QMessageBox.critical(self, '错误', '包含非十六进制数')
+#                 return
+
+            if not s.isalnum():
                 QMessageBox.critical(self, '错误', '包含非十六进制数')
                 return
+
             try:
                 hexData = binascii.a2b_hex(s)
             except:
